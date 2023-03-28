@@ -1,0 +1,2852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dragable-Basic table</title>
+  <!-- Font: SF Pro Display -->
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+  <!-- Global styles & variables -->
+  <link rel="stylesheet" href="/css/global.css">
+  <!-- Basic table style -->
+  <link rel="stylesheet" href="/css/basic-dragable.css">
+</head>
+
+<body>
+
+  <!-- Root container -->
+  <div id="app">
+
+    <!-- Sidebar -->
+    <aside>
+      <code>{sidebar}</code>
+    </aside>
+
+    <!-- Result Container -->
+    <main>
+      <!-- Header: Title & Data total counter -->
+      <header class="result-header">
+        <div class="result-header__title">
+          <h2>Results</h2>
+          <div class="result-header__counter">
+            <strong>1-50</strong>
+            <span>of</span>
+            <strong>24,200</strong>
+          </div>
+          <!-- Refresh button -->
+          <button class="btn-refresh has--tooltip" data-tooltip="Refresh data">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+              <path fill="#fff" fill-opacity=".01" d="M0 0h16v16H0z" />
+              <path fill="#42526E"
+                d="M5.333 4.002v1.997a.667.667 0 1 0 1.334 0V3.4a.734.734 0 0 0-.734-.734h-2.6a.668.668 0 1 0 0 1.335h2Z" />
+              <path fill="#42526E"
+                d="M6.285 12.012C4.901 11.326 4 9.872 4 8.247c0-1.511.778-2.88 2.013-3.617a.71.71 0 0 0 .081-1.15.653.653 0 0 0-.743-.055c-1.646.982-2.684 2.808-2.684 4.822 0 2.165 1.201 4.105 3.046 5.019.332.165.73.017.888-.329a.707.707 0 0 0-.316-.925Z" />
+              <path fill="#42526E" fill-rule="evenodd"
+                d="M9.333 10.001V12.6c0 .405.329.734.734.734h2.6a.668.668 0 1 0 0-1.335h-2v-1.997a.667.667 0 1 0-1.334 0Z"
+                clip-rule="evenodd" />
+              <path fill="#42526E" fill-rule="evenodd"
+                d="M9.398 3.064a.706.706 0 0 0 .316.925c1.385.686 2.285 2.14 2.285 3.764 0 1.511-.778 2.88-2.014 3.617a.709.709 0 0 0-.246.947c.182.333.59.448.909.258 1.647-.982 2.685-2.808 2.685-4.822 0-2.165-1.202-4.105-3.047-5.018a.638.638 0 0 0-.645.042.667.667 0 0 0-.243.287Z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+          <!-- ./ Refresh button -->
+        </div>
+      </header>
+
+      <!-- Result Table Container -->
+      <div class="table-container">
+
+        <!-- Table container header -->
+        <div class="table-container__header">
+
+          <!-- Tabs: [Basic view] | [Detail view] -->
+          <div class="table-container__tabs">
+            <!-- Tab nav: Basic view -->
+            <button class="table-container__tabs-btn active">
+              <span class="table-container__tabs-btn--icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path fill="#fff" fill-opacity=".01" d="M0 0h24v24H0z" />
+                  <path fill="#42526E"
+                    d="M4 17.995h15.992c-.009 0-.009-9.99-.009-9.99H3.992c.008 0 .008 9.99.008 9.99Zm-2-12C2 4.892 2.898 4 3.99 4h16.02C21.108 4 22 4.895 22 5.994v12.012A1.997 1.997 0 0 1 20.01 20H3.99A1.994 1.994 0 0 1 2 18.006V5.995Z" />
+                  <path fill="#42526E" d="M8 6v12h2V6H8Zm6 0v12h2V6h-2Z" />
+                  <path fill="#42526E" fill-rule="evenodd" d="M4 12h17v2H4v-2Z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              <span class="table-container__tabs-btn--txt">Basic view</span>
+            </button>
+            <!-- Tab nav: Detail view -->
+            <button class="table-container__tabs-btn">
+              <span class="table-container__tabs-btn--icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path fill="#fff" fill-opacity=".01" d="M0 0h24v24H0z" />
+                  <path fill="#42526E"
+                    d="M14 17h6c.003 0 0-9.994 0-9.994C20 7 14 7 14 7v10ZM12 5h8c1.105 0 2 .897 2 2.006v9.988A1.996 1.996 0 0 1 20 19h-8V5ZM2 7h8V5H2.997A.996.996 0 0 0 2 6v1Zm0 4h8V9H2v2Zm0 7c0 .552.453 1 .997 1H10v-2H2v1Zm0-3h8v-2H2v2Z" />
+                </svg>
+              </span>
+              <span class="table-container__tabs-btn--txt">Detail view</span>
+            </button>
+          </div>
+          <!-- Tabs: [Basic view] | [Detail view] -->
+
+          <!-- Action: [Columns] | [Export] -->
+          <div class="table-container__action">
+            <button class="btn-primary table-container__action-btn">
+              <span class="table-container__action-btn--txt">Configure columns</span>
+            </button>
+            <button class="btn-primary table-container__action-btn">
+              <span class="table-container__action-btn--txt">Export</span>
+            </button>
+          </div>
+          <!-- Action: [Columns] | [Export] -->
+
+        </div>
+        <!-- Table container header -->
+
+        <!-- V2 -->
+        
+        
+        <!-- V2 -->
+
+        <!-- =========== Table: | Basic | =========== -->
+        <table id="table-basic" class="table-basic table-clean horizontal users-table trans">
+          <thead>
+            <!-- Table main header: column names -->
+            <tr class="main-head">
+              <th class="sticky-col">
+                <span>User</span>
+              </th>
+              <th class="dragable" colspan="3"  data-order="1">
+                <span class="drag-handler">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path fill="#fff" fill-opacity=".01" d="M0 0h24v24H0z" />
+                    <path fill="#505F79"
+                      d="M10 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+                  </svg>
+                </span>
+                <span>Issues</span>
+              </th>
+              <th class="dragable" colspan="2"  data-order="2">
+                <span class="drag-handler">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path fill="#fff" fill-opacity=".01" d="M0 0h24v24H0z" />
+                    <path fill="#505F79"
+                      d="M10 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+                  </svg>
+                </span>
+                <span>Statuses</span>
+              </th>
+              <th class="dragable" colspan="3"  data-order="3">
+                <span class="drag-handler">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path fill="#fff" fill-opacity=".01" d="M0 0h24v24H0z" />
+                    <path fill="#505F79"
+                      d="M10 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+                  </svg>
+                </span>
+                <span>Comments</span>
+              </th>
+              <th class="dragable" colspan="3"  data-order="4">
+                <span class="drag-handler">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path fill="#fff" fill-opacity=".01" d="M0 0h24v24H0z" />
+                    <path fill="#505F79"
+                      d="M10 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+                  </svg>
+                </span>
+                <span>Projects</span>
+              </th>
+              <th class="dragable" colspan="3"  data-order="5">
+                <span class="drag-handler">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path fill="#fff" fill-opacity=".01" d="M0 0h24v24H0z" />
+                    <path fill="#505F79"
+                      d="M10 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+                  </svg>
+                </span>
+                <span>Users</span>
+              </th>
+              <th class="dragable" colspan="3"  data-order="6">
+                <span class="drag-handler">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path fill="#fff" fill-opacity=".01" d="M0 0h24v24H0z" />
+                    <path fill="#505F79"
+                      d="M10 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+                  </svg>
+                </span>
+                <span>Worklogs</span>
+              </th>
+              <th class="dragable" colspan="2"  data-order="7">
+                <span class="drag-handler">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path fill="#fff" fill-opacity=".01" d="M0 0h24v24H0z" />
+                    <path fill="#505F79"
+                      d="M10 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-4-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm4 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+                  </svg>
+                </span>
+                <span>Issue links</span>
+              </th>
+              <th class="end-fix">Total</th>
+            </tr>
+            <!-- Second Header: Action names -->
+            <tr class="second-head">
+              <th class="sticky-col">Actions:</th>
+              <!-- Issues -->
+              <th class="sort--down"><span>Created</span></th>
+              <th class="sort--up"><span>Updated</span></th>
+              <th><span>Deleted</span></th>
+              <!-- Statuses -->
+              <th class="inline-flex">
+                <span>Updated</span>
+                <i class="info-icon has--tooltip" data-tooltip="Includes resolution">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" fill="none" viewBox="0 0 11 12">
+                    <path fill="#42526E" fill-rule="evenodd"
+                      d="M5.5 11.333A5.333 5.333 0 1 1 5.5.667a5.333 5.333 0 0 1 0 10.666Zm0-5.667a.667.667 0 0 0-.666.667V8a.667.667 0 0 0 1.333 0V6.333a.667.667 0 0 0-.667-.667Zm0-.75a.917.917 0 1 0 0-1.833.917.917 0 0 0 0 1.833Z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </i>
+              </th>
+              <th>Resolved</th>
+              <!-- Comments -->
+              <th><span>Created</span></th>
+              <th><span>Updated</span></th>
+              <th><span>Deleted</span></th>
+              <!-- Projects -->
+              <th><span>Created</span></th>
+              <th><span>Updated</span></th>
+              <th><span>Deleted</span></th>
+              <!-- Users -->
+              <th><span>Created</span></th>
+              <th><span>Updated</span></th>
+              <th><span>Deleted</span></th>
+              <!-- Worklogs -->
+              <th><span>Created</span></th>
+              <th><span>Updated</span></th>
+              <th><span>Deleted</span></th>
+              <!-- Issue links -->
+              <th><span>Created</span></th>
+              <th><span>Updated</span></th>
+              <!-- Total -->
+              <th class="end-fix">42,645</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- Row -->
+            <tr>
+              <!-- Fixed start: User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=7" class="avatar">
+                  <span>Ann Vargas</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=6" class="avatar">
+                  <span>Randy Barton</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=11" class="avatar">
+                  <span>Bill Boone</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=1" class="avatar">
+                  <span>Anne Kelley</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=7" class="avatar">
+                  <span>Theodore Ferguson</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=20" class="avatar">
+                  <span>Jacob Simon</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=15" class="avatar">
+                  <span>Katharine Jackson</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=17" class="avatar">
+                  <span>Sophie Gregory</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=13" class="avatar">
+                  <span>Isaac Robertson</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=14" class="avatar">
+                  <span>Scott Pittman</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+            <!-- Row -->
+            <tr>
+              <!-- User -->
+              <td class="sticky-col">
+                <a href="#{user_id}" target="_blank" class="user-name">
+                  <img src="https://i.pravatar.cc/24?img=12" class="avatar">
+                  <span>Duane Hanson</span>
+                </a>
+              </td>
+              <!-- Issues -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Statuses -->
+              <td>
+                <a href="#{jql_query}" target="_blank">999</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">666</a>
+              </td>
+              <!-- Comments -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Projects -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Users -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Worklogs -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">333</a>
+              </td>
+              <!-- Issue links -->
+              <td>
+                <a href="#{jql_query}" target="_blank">123</a>
+              </td>
+              <td>
+                <a href="#{jql_query}" target="_blank">222</a>
+              </td>
+              <td class="end-fix">
+                <a href="#{jql_query}" target="_blank">
+                  <strong>222</strong>
+                </a>
+              </td>
+            </tr>
+            <!-- . Row -->
+          </tbody>
+
+          <!-- Footer -->
+          <tfoot>
+            <!-- Second Header: Action names -->
+            <tr class="second-head">
+              <th class="sticky-col">Total:</th>
+              <!-- Issues -->
+              <th class="sort--down"><span>499</span></th>
+              <th class="sort--up"><span>393</span></th>
+              <th><span>464</span></th>
+              <!-- Statuses -->
+              <th class="inline-flex">
+                <span>254</span>
+                <i class="info-icon has--tooltip" data-tooltip="Includes resolution">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" fill="none" viewBox="0 0 11 12">
+                    <path fill="#42526E" fill-rule="evenodd"
+                      d="M5.5 11.333A5.333 5.333 0 1 1 5.5.667a5.333 5.333 0 0 1 0 10.666Zm0-5.667a.667.667 0 0 0-.666.667V8a.667.667 0 0 0 1.333 0V6.333a.667.667 0 0 0-.667-.667Zm0-.75a.917.917 0 1 0 0-1.833.917.917 0 0 0 0 1.833Z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </i>
+              </th>
+              <th>294</th>
+              <!-- Comments -->
+              <th><span>453</span></th>
+              <th><span>448</span></th>
+              <th><span>311</span></th>
+              <!-- Projects -->
+              <th><span>250</span></th>
+              <th><span>406</span></th>
+              <th><span>313</span></th>
+              <!-- Users -->
+              <th><span>360</span></th>
+              <th><span>383</span></th>
+              <th><span>394</span></th>
+              <!-- Worklogs -->
+              <th><span>587</span></th>
+              <th><span>598</span></th>
+              <th><span>407</span></th>
+              <!-- Issue links -->
+              <th><span>493</span></th>
+              <th><span>443</span></th>
+              <!-- Total -->
+              <th class="end-fix">42,645</th>
+            </tr>
+          </tfoot>
+          <!-- End: Footer -->
+        </table>
+        <!-- ./End =========== Table: | Basic | =========== -->
+
+        <!-- Table container: footer & Pagination -->
+        <div class="table-container__footer">
+          <!-- Total: -->
+          <div class="result-header__counter">
+            <strong>1-50</strong>
+            <span>of</span>
+            <strong>24,200</strong>
+          </div>
+          <!-- Pagination: -->
+          <nav class="pagination">
+            <a href="#1">1</a>
+            <a href="#1" class="active">2</a>
+            <a href="#1">3</a>
+            <a href="#1">...</a>
+            <a href="#1">4</a>
+            <a href="#1">5</a>
+          </nav>
+
+          <!-- Action: [Columns] | [Export] -->
+          <div class="table-container__action">
+            <button class="btn-primary table-container__action-btn">
+              <span class="table-container__action-btn--txt">Configure columns</span>
+            </button>
+            <button class="btn-primary table-container__action-btn">
+              <span class="table-container__action-btn--txt">Export</span>
+            </button>
+          </div>
+          <!-- ./ End Action: [Columns] | [Export] -->
+        </div>
+        <!-- ./End Table container: footer & Pagination -->
+      </div>
+      <!-- ./ End Result Table Container -->
+
+    </main>
+    <!-- ./ End Result container -->
+
+  </div>
+  <!-- ./ End Root container #app -->
+
+  <!-- JS -->
+  <script src="./js/global.js"></script>
+  <script src="./js/basic-dragable.js"></script>
+  <!-- JS -->
+
+</body>
+
+</html>

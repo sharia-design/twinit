@@ -1,0 +1,274 @@
+/* ========== Basic table ========== */
+
+.table-basic {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
+  max-width: 100%;
+  max-height: calc(100vh - 160px);
+  border-collapse: separate;
+  display: block;
+  background-color: var(--color-n40);
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+
+.main-head {
+  height: 56px;
+  background-color: var(--color-n20);
+  vertical-align: middle;
+}
+
+.main-head th {
+  padding: 0 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-n700);
+  text-align: left;
+  box-shadow: 1px 0px 0px 0px var(--color-n40);
+}
+
+.second-head {
+  height: 56px;
+  background-color: var(--color-n20) !important;
+  box-shadow: 0px -2px 0px 0px var(--color-n40),
+  0px 2px 0px 0px var(--color-n40);
+}
+
+.second-head th {
+  font-size: 12px;
+  color: var(--color-n600);
+  line-height: 16px;
+  border-right: 1px solid var(--color-n40);
+  font-weight: 600;
+}
+/* Column Sorting */
+.second-head th {
+  cursor: pointer !important;
+  transition: .2s ease-in-out;
+}
+.second-head th:hover {
+  background-color: var(--color-n30);
+}
+.second-head th span {
+  position: relative;
+}
+.second-head th span::before,
+.second-head th span::after {
+  content: "";
+  display: block;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  right: -8px;
+  border: 3px solid transparent;
+}
+.second-head th span::before {
+  border-bottom: 3px solid var(--icon-disabled);
+  bottom: 8px;
+}
+.second-head th span::after {
+  border-top: 3px solid var(--icon-disabled);
+  bottom: 0px;
+}
+.second-head th.sort--down span::after {
+  border-top: 3px solid var(--icon-subtle);
+}
+.second-head th.sort--up span::before {
+  border-bottom: 3px solid var(--icon-subtle);
+}
+/* Column Sorting */
+
+.second-head th.inline-flex {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.second-head th.sticky-col {
+  padding-right: 8px;
+  font-size: 14px;
+  text-align: right;
+  background-color: var(--color-n20) !important;
+}
+
+.second-head th:not(.sticky-col) {
+  padding: 0 16px;
+}
+
+.table-basic.dragging {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.table-basic thead {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+.table-basic tfoot {
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.table-basic tfoot .second-head th.inline-flex,
+.table-basic tfoot .second-head {
+  line-height: 20px;
+  height: 32px;
+}
+
+.table-basic thead,
+.table-basic tbody {
+  width: 100%;
+  min-width: 100%;
+}
+
+.table-basic th.end-fix,
+.table-basic th.sticky-col {
+  background: var(--color-n0);
+}
+
+.sticky-col {
+  position: sticky;
+  top: 0;
+  left: 0;
+  border-right: 1px solid var(--color-n40);
+  background: var(--color-n0);
+  z-index: 1;
+  box-shadow: 8px 0px 16px rgba(9, 30, 66, 0.12), 0px 0px 1px rgba(9, 30, 66, 0.31);
+  transition: .3s ease-in;
+}
+
+.end-fix {
+  position: sticky;
+  top: 0;
+  right: 0;
+  border-left: 1px solid var(--color-n40);
+  background-color: var(--color-n0);
+  box-shadow: -8px 0px 16px rgba(9, 30, 66, 0.12), 0px 0px 1px rgba(9, 30, 66, 0.31);
+  z-index: 3;
+  transition: .3s ease-in;
+}
+.table-basic tbody tr {
+  background-color: var(--color-n10);
+  transition: .3s ease-in;
+}
+
+.table-basic tbody tr td:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.table-basic tbody td {
+  padding: 11px;
+  text-align: center;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.table-basic tbody td:not(.sticky-col) a {
+  position: relative;
+  color: var(--color-b400);
+  font-weight: 600;
+  text-decoration: none;
+}
+.table-basic tbody td:not(.sticky-col) a:hover {
+  text-decoration: underline;
+}
+.table-basic tbody td:not(.sticky-col) a:hover::before {
+  content: '↗';
+  position: absolute;
+  right: -12px;
+  top: -4px;
+}
+
+.table-basic tbody td strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.table-basic tbody tr:hover {
+  background-color: var(--color-n30);
+}
+
+.table-basic tbody tr:hover td.sticky-col,
+.table-basic tbody tr:hover td.end-fix {
+  background-color: var(--color-n10);
+}
+
+/* Table inner elements */
+.avatar {
+  border-radius: 50%;
+}
+
+.user-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--color-n800);
+  text-decoration: none;
+}
+
+.user-name:hover {
+  text-decoration: underline;
+  color: var(--color-b400);
+}
+
+/* Table inner elements */
+
+/* ========== Basic table ========== */
+
+
+/* Dragging */
+/* Drag columns */
+.dragable {
+  background-color: var(--color-n30);
+  cursor: move;
+  user-select: none;
+}
+.drag-handler {
+  vertical-align: middle;
+  opacity: .5;
+  cursor: grab;
+  transition: .2s ease-in-out;
+}
+.drag-handler:hover {
+  opacity: 1;
+}
+
+.placeholder {
+  background-color: #edf2f7;
+  border: 2px dashed #cbd5e0;
+}
+.clone-list {
+  border-left: 1px solid red;
+  border-top: 1px solid red;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+}
+.clone-table {
+  border-collapse: collapse;
+  border: none;
+}
+
+tbody tr td.hover {
+  background-color: salmon;
+}
+
+/* Drag columns */
+/* Dragging */
+
+/* ========== Basic table V2 ========== */
+
+/* ========== Basic table V2 ========== */

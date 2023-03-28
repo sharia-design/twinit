@@ -1,0 +1,186 @@
+/* ========== Table Cell UI ========== */
+/* --- Action Badges: */
+.action-badge {
+  padding: 0px 4px;
+  border-radius: 3px;
+  line-height: 16px;
+  height: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.action-badge.update {
+  background-color: var(--color-y75);
+  color: var(--colon800);
+}
+/* --- Status Badges: */
+/* --- Time Badges: */
+.date-time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.time {
+  padding: 0 4px;
+  border-radius: 3px;
+  background-color: var(--color-n30);
+  color: var(--color-n500);
+}
+.date {
+  color: var(--color-n800);
+}
+/* --- Author: */
+.author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--color-n800);
+  text-decoration: none;
+}
+.avatar {
+  border-radius: 50%;
+  width: 24px;
+}
+.author:hover {
+  color: var(--color-b400);
+  text-decoration: underline;
+}
+/* --- Target: */
+.target {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--color-n800);
+  text-decoration: none;
+}
+/* --- Project: */
+.project {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--color-n800);
+  text-decoration: none;
+}
+.project-logo {
+  border-radius: 3px;
+  width: 24px;
+}
+/* --- Button: details : */
+.btn-detail {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--color-n500);
+  text-decoration: none;
+  transition: .3s ease-out;
+}
+.btn-detail__icon {
+  border-radius: 3px;
+  width: 24px;
+}
+/* ========== Table Cell UI ========== */
+
+/* ========== Detail table ========== */
+table {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #EEEEEE;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--color-n400);
+  border-top: none;
+  text-align: left;
+  height: 64px;
+  padding: 10px 8px;
+  color: #363D41;
+  font-size: 14px;
+}
+
+tr {
+  background-color: var(--color-n10);
+  border-bottom: 2px solid var(--color-n400);
+  cursor: pointer;
+  display: grid;
+  height: 64px;
+  grid-template-columns: repeat(6, 1fr);
+  justify-content: flex-start;
+  align-items: center;
+  transition: .3s ease-out;
+}
+tr
+tr:not(.active):hover {
+  background-color: var(--color-n500);
+}
+
+tr.active td:last-child {
+  background-color: var(--color-n40);
+  border-left: 1px solid var(--color-n500);
+  padding-bottom: 100px;
+
+  /* border: 2px solid var(--color-n800); */
+}
+tr.active .details {
+  box-shadow: 2px 0 0 0 black, -2px 0 0 0 black, 0 2px 0 0 black;
+  /* border-left: 2px solid black; */
+  background-color: var(--color-n10);
+}
+.details {
+  background-color: var(--color-n800);
+  padding: 16px;
+  display: grid;
+  grid-column: 1/-1;
+  justify-content: flex-start;
+  width: 100%;
+  background-color: var(--color-0);
+  /* border: 2px solid var(--color-n800); */
+  z-index: 9;
+}
+.details-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.hide-row {
+  height: 0;
+  display: none;
+}
+
+/* ========== Detail table ========== */
+
+/* Top info. */
+.top-info {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.description {
+  padding: 8px;
+  border-radius: 3px;
+  background-color: var(--color-n0);
+  border: 1px dashed var(--color-n50);
+}
