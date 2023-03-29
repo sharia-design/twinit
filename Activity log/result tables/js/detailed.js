@@ -1,17 +1,48 @@
 
-const toggleRow = (el) => {
-  el.classList.toggle('active')
-  el.getElementsByClassName('details')[0].classList.toggle('hide-row');
+const rows = document.querySelectorAll(`tbody tr:not(.details)`)
 
-  let rowWidth = el.offsetWidth
-  let detailContainer = el.children[6]
-  let detailHeight = el.children[6].offsetHeight
+rows.forEach(row => {
+  row.addEventListener('click', (e) => {
+    let details = row.nextElementSibling
+    let btnDetails = row.querySelector('.btn-detail')
 
-  console.log(detailContainer);
-  
-  console.log(`height: ${detailHeight}`);
-  
+    if (row.classList.contains('active')) {
+      btnDetails.querySelector('.btn-detail__txt').innerHTML = 'View details'
+    } else {
+      btnDetails.querySelector('.btn-detail__txt').innerHTML = 'Close details'
+    }
 
-  el.children[6].children[0].style.width = `${rowWidth-32}px`
-  // console.log(event);
-}
+
+    row.classList.toggle('active')
+    if (details) {
+      details.classList.toggle('show')
+    }
+
+  })
+});
+
+
+
+
+// Column hover -> target cell effect
+const tableRows = document.querySelectorAll("tbody > tr");
+const tableHeaders = document.querySelectorAll("th");
+
+tableHeaders.forEach((header, columnIndex) => {
+  header.addEventListener("mouseover", () => {
+    tableRows.forEach((row) => {
+      const cell = row.querySelectorAll("td")[columnIndex];
+      if (cell) {
+        cell.style.backgroundColor = '#F4F5F7';
+      }
+    });
+  });
+  header.addEventListener("mouseout", () => {
+    tableRows.forEach((row) => {
+      const cell = row.querySelectorAll("td")[columnIndex];
+      if (cell) {
+        cell.style.backgroundColor = '#FFFFFF';
+      }
+    });
+  });
+});

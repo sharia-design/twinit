@@ -1,5 +1,6 @@
 /* ========== Table Cell UI ========== */
 /* --- Action Badges: */
+.badge,
 .action-badge {
   padding: 0px 4px;
   border-radius: 3px;
@@ -9,10 +10,20 @@
   font-weight: 700;
   text-transform: uppercase;
 }
+
 .action-badge.update {
   background-color: var(--color-y75);
   color: var(--colon800);
 }
+.action-badge.create {
+  background-color: #EAE6FF;
+  color: #403294;
+}
+.action-badge.delete {
+  background-color: #FFEBE6;
+  color: #BF2600;
+}
+
 /* --- Status Badges: */
 /* --- Time Badges: */
 .date-time {
@@ -23,15 +34,25 @@
   line-height: 20px;
   font-weight: 400;
 }
+
 .time {
   padding: 0 4px;
   border-radius: 3px;
+  white-space: nowrap;
   background-color: var(--color-n30);
   color: var(--color-n500);
+  transition: .3s ease;
 }
+
 .date {
   color: var(--color-n800);
 }
+
+tbody tr.active .time {
+  color: #fff;
+  background-color: var(--color-n500);
+}
+
 /* --- Author: */
 .author {
   display: flex;
@@ -43,14 +64,17 @@
   color: var(--color-n800);
   text-decoration: none;
 }
+
 .avatar {
   border-radius: 50%;
   width: 24px;
 }
+
 .author:hover {
   color: var(--color-b400);
   text-decoration: underline;
 }
+
 /* --- Target: */
 .target {
   display: flex;
@@ -62,6 +86,7 @@
   color: var(--color-n800);
   text-decoration: none;
 }
+
 /* --- Project: */
 .project {
   display: flex;
@@ -73,12 +98,15 @@
   color: var(--color-n800);
   text-decoration: none;
 }
+
 .project-logo {
   border-radius: 3px;
   width: 24px;
 }
+
 /* --- Button: details : */
 .btn-detail {
+  padding: 8px 12px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -86,14 +114,27 @@
   gap: 8px;
   font-size: 14px;
   line-height: 20px;
-  font-weight: 500;
+  font-weight: 600;
+  white-space: nowrap;
   color: var(--color-n500);
   text-decoration: none;
   transition: .3s ease-out;
 }
+
 .btn-detail__icon {
   border-radius: 3px;
   width: 24px;
+  transition: .5s ease;
+}
+tbody tr.active .btn-detail {
+  background-color: #42526E;
+  color: #fff;
+}
+tbody tr.active .btn-detail .btn-detail__icon svg path  {
+  fill: #fff;
+}
+tbody tr.active .btn-detail .btn-detail__icon {
+  transform: rotate(45deg);
 }
 /* ========== Table Cell UI ========== */
 
@@ -101,28 +142,37 @@
 table {
   width: 100%;
   border: none;
-  border-top: 1px solid #EEEEEE;
   font-family: arial, sans-serif;
   border-collapse: collapse;
+  display: table;
 }
 
 td,
 th {
   display: flex;
   align-items: center;
-  border-right: 1px solid var(--color-n400);
+  border-right: 1px solid var(--color-n40);
   border-top: none;
   text-align: left;
-  height: 64px;
   padding: 10px 8px;
-  color: #363D41;
-  font-size: 14px;
+}
+
+th {
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-n20);
+  border-top: 1px solid var(--color-n40);
+  border-bottom: 1px solid var(--color-n40);
+  cursor: default;
+  transition: .3s ease-out;
+}
+th:hover {
+  background-color: var(--color-n30);
 }
 
 tr {
-  background-color: var(--color-n10);
-  border-bottom: 2px solid var(--color-n400);
-  cursor: pointer;
+  border-bottom: 2px solid var(--coor-n4l00);
   display: grid;
   height: 64px;
   grid-template-columns: repeat(6, 1fr);
@@ -130,57 +180,220 @@ tr {
   align-items: center;
   transition: .3s ease-out;
 }
-tr
-tr:not(.active):hover {
-  background-color: var(--color-n500);
+
+tbody tr {
+  background-color: var(--color-n0);
+  height: 64px;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}
+tbody tr td {
+  height: 64px;
+  line-height: 64px;
+  border-bottom: 1px solid var(--color-n40);
+  transition: .3s ease-out;
 }
 
-tr.active td:last-child {
-  background-color: var(--color-n40);
-  border-left: 1px solid var(--color-n500);
-  padding-bottom: 100px;
 
-  /* border: 2px solid var(--color-n800); */
+tbody > tr:not(.active):hover td {
+  background-color: var(--color-n20) !important;
 }
-tr.active .details {
-  box-shadow: 2px 0 0 0 black, -2px 0 0 0 black, 0 2px 0 0 black;
-  /* border-left: 2px solid black; */
-  background-color: var(--color-n10);
+
+
+/* Details */
+tbody tr.active {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
-.details {
-  background-color: var(--color-n800);
-  padding: 16px;
-  display: grid;
-  grid-column: 1/-1;
-  justify-content: flex-start;
-  width: 100%;
-  background-color: var(--color-0);
-  /* border: 2px solid var(--color-n800); */
-  z-index: 9;
+tbody tr.active td {
+  background-color: var(--color-n30) !important;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 }
-.details-container {
+tbody tr.active td:first-child {
+  border-left: none;
+}
+
+tbody tr.details {
+  background-color: var(--color-n20);
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
+  flex-direction: column;
+  height: auto;
+  display: none;
+  cursor: default;
+}
+tbody tr.details td {
+  border-left: 1px solid var(--color-n500);
+  border-bottom: 1px solid var(--color-n500);
+  border-right: 1px solid var(--color-n500);
+  padding: 16px;
+  line-height: inherit;
+  display: table-cell;
+}
+tbody tr.details.show {
+  display: table-row !important;
 }
 
-.hide-row {
-  height: 0;
-  display: none;
-}
 
 /* ========== Detail table ========== */
 
 /* Top info. */
 .top-info {
-  display: flex;
   width: 100%;
+  display: flex;
+  gap: 40px;
   justify-content: space-between;
 }
+
 .description {
-  padding: 8px;
+  flex-grow: 1;
+  padding: 8px 16px;
   border-radius: 3px;
   background-color: var(--color-n0);
   border: 1px dashed var(--color-n50);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.description > a {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--color-b400);
+  text-decoration: none;
+  transition: .2s ease-in-out;
+}
+.description > a:hover {
+  color: var(--color-b400);
+  text-decoration: underline;
+}
+.description > strong {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-n800);
+}
+.description > span {
+  font-size: 11px;
+  line-height: 11px;
+  font-weight: 600;
+  color: var(--color-n800);
+  text-decoration: none;
+  transition: .2s ease-in-out;
+}
+
+.actions {
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-n0);
+  border-radius: 3px;
+}
+.key {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 8px;
+  border-right: 1px solid var(--color-n40);
+}
+.key h4,
+.key strong {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 800;
+  color: var(--color-n800);
+}
+.btn--copy {
+  padding: 3px;
+}
+.detail-open-link {
+  padding: 4px 16px !important;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-n500);
+}
+
+.changes {
+  margin-top: 24px;
+  width: 100%;
+}
+.changes--title {
+  display: flex;
+  vertical-align: middle;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  color: var(--colon800);
+}
+.changes--flex {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 24px;
+}
+.changes--icon {
+  align-self: center;
+}
+.old {
+  padding: 16px;
+  border-radius: 3px;
+  background-color: var(--color-n30);
+  flex-grow: 1;
+}
+.new {
+  padding: 16px;
+  border-radius: 3px;
+  background-color: var(--color-n0);
+  flex-grow: 1;
+}
+
+.changes-meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.badge--old {
+  background-color: #DE350B;
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+.badge--new {
+  background-color: #00875A;
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+.badge--date {
+  background-color: #DFE1E6;
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  color: var(--color-n500);
+}
+
+.values {
+  margin-top: 16px;
+  font-size: 14;
+  line-height: 20px;
+  width: 100%;
+}
+.old--value {
+  color: var(--color-n500);
+}
+.new--value {
+  color: var(--color-n800);
 }
