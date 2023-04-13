@@ -244,6 +244,7 @@ tbody tr.details.show {
   display: flex;
   gap: 40px;
   justify-content: space-between;
+  flex-direction: row-reverse;
 }
 
 .description {
@@ -302,7 +303,11 @@ tbody tr.details.show {
   font-size: 11px;
   line-height: 16px;
   font-weight: 800;
+  max-width: 240px;
+  white-space: nowrap;
   color: var(--color-n800);
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .btn--copy {
   padding: 3px;
@@ -397,3 +402,45 @@ tbody tr.details.show {
 .new--value {
   color: var(--color-n800);
 }
+
+
+/* Column Sorting */
+th {
+  cursor: pointer !important;
+  transition: .2s ease-in-out;
+}
+
+th span {
+  position: relative;
+}
+
+th span::before,
+th span::after {
+  content: "";
+  display: block;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  right: -8px;
+  border: 3px solid transparent;
+}
+
+th span::before {
+  border-bottom: 3px solid var(--color-n50);
+  bottom: 8px;
+}
+
+th span::after {
+  border-top: 3px solid var(--color-n50);
+  bottom: 0px;
+}
+
+th.sort--down span::after {
+  border-top: 3px solid var(--color-n800);
+}
+
+th.sort--up span::before {
+  border-bottom: 3px solid var(--color-n800);
+}
+
+/* Column Sorting */
