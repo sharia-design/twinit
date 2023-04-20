@@ -243,14 +243,16 @@ tbody tr.details.show {
   gap: 40px;
   justify-content: space-between;
   flex-direction: row-reverse;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-n40);
 }
 
 .description {
   flex-grow: 1;
   padding: 8px 16px;
   border-radius: 3px;
-  background-color: var(--color-n0);
-  border: 1px dashed var(--color-n50);
+  /* background-color: var(--color-n0); */
+  /* border: 1px dashed var(--color-n50); */
   display: flex;
   gap: 6px;
   align-items: center;
@@ -294,18 +296,23 @@ tbody tr.details.show {
   align-items: center;
   gap: 8px;
   padding-right: 8px;
-  border-right: 1px solid var(--color-n40);
+  /* border-right: 1px solid var(--color-n40); */
 }
 .key h4,
 .key strong {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 16px;
-  font-weight: 800;
+  font-weight: 400;
   max-width: 240px;
   white-space: nowrap;
-  color: var(--color-n800);
+  color: var(--color-n300);
   text-overflow: ellipsis;
+  cursor: pointer;
   overflow: hidden;
+}
+.key strong:hover {
+  text-decoration: underline;
+  color: var(--color-n500);
 }
 .btn--copy {
   padding: 3px;
